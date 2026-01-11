@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IbuHamil; 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class IbuHamilController extends Controller
 {
@@ -64,5 +65,27 @@ class IbuHamilController extends Controller
         $hamil->delete();
 
         return redirect()->route('ibu-hamil.index')->with('success', 'Data berhasil dihapus!');
+    }
+
+    public function cetakPdf(Request $request)
+    {
+        // 1. Cek Filter yang dipilih user
+        if ($request->filter == 'periode') {
+            $tgl_awal = $request->tgl_awal;
+            $tgl_akhir = $request->tgl_akhir;
+
+            // Ambil data berdasarkan range tanggal
+            $data = \App\Models\IbuHamil::whereBetween('tanggal_k6', [$tgl_awal, $tgl_akhir])->get();
+
+            // Buat Label Periode
+            $periode = "Periode: " . Carbon::parse($tgl_awal)->format('d-m-Y') . " s/d " . Carbon::parse($tgl_akhir)->format('d-m-Y');
+        } else {
+            // Ambil Semua Data
+            $data = \App\Models\IbuHamil::all();
+            $periode = "Semua Periode";
+        }
+
+        // 2. Kirim data dan variabel periode ke view
+        return view('ibu_hamil.cetak', compact('data', 'periode'));
     }
 }

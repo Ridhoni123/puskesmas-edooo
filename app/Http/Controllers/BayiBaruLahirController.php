@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BayiBaruLahir;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class BayiBaruLahirController extends Controller
 {
@@ -57,5 +58,26 @@ class BayiBaruLahirController extends Controller
         $bayi = BayiBaruLahir::findOrFail($id);
         $bayi->delete();
         return redirect()->route('bayi-baru-lahir.index')->with('success', 'Data bayi berhasil dihapus!');
+    }
+
+    public function cetakPdf(Request $request)
+    {
+        // 1. Cek Filter
+        if ($request->filter == 'periode') {
+            $tgl_awal = $request->tgl_awal;
+            $tgl_akhir = $request->tgl_akhir;
+
+            // Filter berdasarkan 'tanggal_kn3' (Tanggal Pelayanan)
+            $data = BayiBaruLahir::whereBetween('tanggal_kn3', [$tgl_awal, $tgl_akhir])->get();
+
+            $periode = "Periode: " . Carbon::parse($tgl_awal)->translatedFormat('d F Y') . " s/d " . Carbon::parse($tgl_akhir)->translatedFormat('d F Y');
+        } else {
+            // Ambil Semua Data
+            $data = BayiBaruLahir::all();
+            $periode = "Semua Periode";
+        }
+
+        // 2. Kirim ke view cetak
+        return view('bayi_baru_lahir.cetak', compact('data', 'periode'));
     }
 }

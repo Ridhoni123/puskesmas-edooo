@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IbuBersalin;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class IbuBersalinController extends Controller
 {
@@ -64,5 +65,26 @@ class IbuBersalinController extends Controller
         $bersalin = IbuBersalin::findOrFail($id);
         $bersalin->delete();
         return redirect()->route('ibu-bersalin.index')->with('success', 'Data berhasil dihapus!');
+    }
+
+    public function cetakPdf(Request $request)
+    {
+        // 1. Cek Filter
+        if ($request->filter == 'periode') {
+            $tgl_awal = $request->tgl_awal;
+            $tgl_akhir = $request->tgl_akhir;
+
+            // Filter berdasarkan 'tanggal_persalinan'
+            $data = IbuBersalin::whereBetween('tanggal_persalinan', [$tgl_awal, $tgl_akhir])->get();
+
+            $periode = "Periode: " . Carbon::parse($tgl_awal)->translatedFormat('d F Y') . " s/d " . Carbon::parse($tgl_akhir)->translatedFormat('d F Y');
+        } else {
+            // Ambil Semua Data
+            $data = IbuBersalin::all();
+            $periode = "Semua Periode";
+        }
+
+        // 2. Kirim ke view cetak
+        return view('ibu_bersalin.cetak', compact('data', 'periode'));
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TerdugaTbc;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class TerdugaTbcController extends Controller
 {
@@ -67,4 +69,25 @@ public function update(Request $request, $id)
     // 4. Kembali ke halaman index
     return redirect()->route('terduga-tbc.index')->with('success', 'Data TBC Berhasil Diperbarui');
 }
+
+    public function cetakPdf(Request $request)
+    {
+        // 1. Cek Filter
+        if ($request->filter == 'periode') {
+            $tgl_awal = $request->tgl_awal;
+            $tgl_akhir = $request->tgl_akhir;
+
+            // Filter berdasarkan 'tanggal_daftar'
+            $data = TerdugaTbc::whereBetween('tanggal_daftar', [$tgl_awal, $tgl_akhir])->get();
+
+            $periode = "Periode: " . Carbon::parse($tgl_awal)->translatedFormat('d F Y') . " s/d " . Carbon::parse($tgl_akhir)->translatedFormat('d F Y');
+        } else {
+            // Ambil Semua Data
+            $data = TerdugaTbc::all();
+            $periode = "Semua Periode";
+        }
+
+        // 2. Kirim ke view cetak
+        return view('terduga_tbc.cetak', compact('data', 'periode'));
+    }
 }

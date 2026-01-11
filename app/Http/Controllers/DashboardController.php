@@ -12,13 +12,25 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Menghitung jumlah total data dari setiap tabel
-        $countHamil = IbuHamil::count();
-        $countBersalin = IbuBersalin::count();
-        $countBayi = BayiBaruLahir::count();
-        $countHiv = PasienHiv::count();
-        $countTbc = TerdugaTbc::count();
+        // Mengambil total data dari masing-masing model
+        $countHamil = \App\Models\IbuHamil::count();
+        $countBersalin = \App\Models\IbuBersalin::count();
+        $countBayi = \App\Models\BayiBaruLahir::count();
 
-        return view('dashboard', compact('countHamil', 'countBersalin', 'countBayi', 'countHiv', 'countTbc'));
+        // Data Penyakit
+        $countHiv = \App\Models\PasienHiv::count();
+        $countTbc = \App\Models\TerdugaTbc::count();
+
+        // Hitung Total Pasien Terdaftar (Semua Kategori)
+        $totalPasien = $countHamil + $countBersalin + $countBayi + $countHiv + $countTbc;
+
+        return view('dashboard', compact(
+            'countHamil',
+            'countBersalin',
+            'countBayi',
+            'countHiv',
+            'countTbc',
+            'totalPasien'
+        ));
     }
 }
