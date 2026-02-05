@@ -14,6 +14,10 @@ class BayiBaruLahir extends Model
         'nama_bayi', 
         'tanggal_lahir', 
         'nik', 
+        'tempat_lahir',
+        'berat_badan', 
+        'panjang_badan', 
+        'kondisi_kesehatan',
         'nama_orang_tua', 
         'is_pbi', 
         'alamat'

@@ -27,7 +27,9 @@ class IbuHamilController extends Controller
             'nik'        => 'required|digits:16',
             'nama_suami' => 'required',
             'alamat'     => 'required',
-            'is_pbi'     => 'required'
+            'is_pbi'     => 'required',
+            'no_hp' => 'nullable|string|max:15',
+            'keterangan' => 'nullable|string',
         ]);
 
         IbuHamil::create($request->all());
@@ -50,7 +52,9 @@ class IbuHamilController extends Controller
         'nik'           => 'required|digits:16',
         'nama_suami'    => 'required',
         'alamat'        => 'required',
-        'is_pbi'        => 'required'
+        'is_pbi'        => 'required',
+        'no_hp' => 'nullable|string|max:15',
+        'keterangan' => 'nullable|string',
     ]);
 
     $hamil = IbuHamil::findOrFail($id);

@@ -12,7 +12,7 @@
             @csrf
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label>Tanggal Pelayanan KN 3</label> 
+                    <label>Tanggal Pelayanan KN 3</label>
                     <input type="date" name="tanggal_kn3" class="form-control" required>
                 </div>
                 <div class="col-md-6 form-group">
@@ -23,13 +23,37 @@
 
             <div class="row">
                 <div class="col-md-6 form-group">
-    <label>Tanggal Lahir Bayi</label>
-    <input type="date" name="tanggal_lahir" class="form-control" required>
-</div>
+                    <label>Tanggal Lahir Bayi</label>
+                    <input type="date" name="tanggal_lahir" class="form-control" required>
+                </div>
                 <div class="col-md-6 form-group">
                     <label>NIK (Jika Ada)</label> [cite: 11]
                     <input type="text" name="nik" class="form-control" maxlength="16">
                 </div>
+            </div>
+            {{-- Tambahkan di dalam <form> setelah baris NIK atau sebelum Alamat --}}
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Tempat Lahir</label>
+                    <input type="text" name="tempat_lahir" class="form-control" placeholder="Contoh: Banjarmasin">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>Berat Badan (gram)</label>
+                    <input type="number" name="berat_badan" class="form-control" placeholder="Contoh: 3000">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>Panjang Badan (cm)</label>
+                    <input type="number" name="panjang_badan" class="form-control" placeholder="Contoh: 49">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Kondisi Kesehatan</label>
+                <select name="kondisi_kesehatan" class="form-control">
+                    <option value="Sehat">Sehat</option>
+                    <option value="Sakit">Sakit</option>
+                    <option value="Perlu Observasi">Perlu Observasi</option>
+                </select>
             </div>
 
             <div class="row">
@@ -38,7 +62,7 @@
                     <input type="text" name="nama_orang_tua" class="form-control" required>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>Jaminan Kesehatan/PBI</label> 
+                    <label>Jaminan Kesehatan/PBI</label>
                     <select name="is_pbi" class="form-control">
                         <option value="1">Ya (v)</option> [cite: 11]
                         <option value="0">Tidak</option>

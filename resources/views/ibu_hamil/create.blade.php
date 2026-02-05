@@ -9,14 +9,14 @@
     </div>
     <div class="card-body">
         @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <form action="{{ route('ibu-hamil.store') }}" method="POST">
             @csrf
             <div class="row">
@@ -52,6 +52,16 @@
                         <option value="1">Ya</option>
                         <option value="0">Tidak</option>
                     </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>No. HP / WhatsApp</label>
+                    <input type="text" name="no_hp" class="form-control" placeholder="No HP" required>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Keterangan</label>
+                    <input type="text" name="keterangan" class="form-control" placeholder="Keterangan" required>
                 </div>
             </div>
 

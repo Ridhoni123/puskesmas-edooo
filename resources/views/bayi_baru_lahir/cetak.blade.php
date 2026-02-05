@@ -157,6 +157,7 @@
                 <th width="30">No</th>
                 <th>Tgl Pelayanan</th>
                 <th>Nama Bayi</th>
+                <th>Tempat Lahir</th>
                 <th>Tgl Lahir</th>
                 <th>Nama Ortu</th>
                 <th>Alamat</th>
@@ -172,6 +173,7 @@
                 <td style="text-align: center;">{{ $key + 1 }}</td>
                 <td style="text-align: center;">{{ \Carbon\Carbon::parse($row->tanggal_kn3)->format('d-m-Y') }}</td>
                 <td>{{ $row->nama_bayi }}</td>
+                <td>{{ $row->tempat_lahir }}</td>
                 <td style="text-align: center;">{{ \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y') }}</td>
                 <td>{{ $row->nama_orang_tua }}</td>
                 <td>{{ $row->alamat }}</td>

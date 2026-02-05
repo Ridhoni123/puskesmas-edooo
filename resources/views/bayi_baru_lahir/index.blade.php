@@ -38,9 +38,9 @@
                     <tr class="text-center">
                         <th>Tgl Pelayanan</th>
                         <th>Nama Bayi</th>
-                        <th>Tgl Lahir</th>
+                        <th>Tempat/Tgl Lahir</th>
                         <th>Orang Tua</th>
-                        <th>Alamat</th>
+                        <th>Kondisi</th>
                         <th>PBI</th>
                         <th width="150px">Aksi</th>
                     </tr>
@@ -52,9 +52,20 @@
                             {{ \Carbon\Carbon::parse($row->tanggal_kn3)->format('d/m/Y') }}
                         </td>
                         <td class="font-weight-bold">{{ $row->nama_bayi }}</td>
-                        <td class="text-center">{{ \Carbon\Carbon::parse($row->tanggal_lahir)->format('d/m/Y') }}</td>
+                        <td class="text-center">
+                            <small>{{ $row->tempat_lahir ?? '-' }}</small><br>
+                            {{ \Carbon\Carbon::parse($row->tanggal_lahir)->format('d/m/Y') }}
+                        </td>
                         <td>{{ $row->nama_orang_tua }}</td>
-                        <td class="small">{{ $row->alamat }}</td>
+                        <td class="text-center">
+                            @if($row->kondisi_kesehatan == 'Sehat')
+                            <span class="badge badge-success px-2">Sehat</span>
+                            @elseif($row->kondisi_kesehatan == 'Sakit')
+                            <span class="badge badge-danger px-2">Sakit</span>
+                            @else
+                            <span class="badge badge-warning px-2">{{ $row->kondisi_kesehatan ?? '-' }}</span>
+                            @endif
+                        </td>
                         <td class="text-center">
                             <span class="badge {{ $row->is_pbi ? 'badge-success' : 'badge-secondary' }}">
                                 {{ $row->is_pbi ? 'Ya' : 'Tidak' }}
@@ -62,15 +73,12 @@
                         </td>
                         <td>
                             <div class="d-flex justify-content-center">
-                                {{-- 1. TOMBOL DETAIL --}}
                                 <button type="button" class="btn btn-info btn-sm mr-2" data-toggle="modal" data-target="#detailModal{{ $row->id }}" title="Detail Lengkap">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                {{-- 2. TOMBOL EDIT --}}
                                 <a href="{{ route('bayi-baru-lahir.edit', $row->id) }}" class="btn btn-warning btn-sm mr-2" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                {{-- 3. TOMBOL HAPUS --}}
                                 <form action="{{ route('bayi-baru-lahir.destroy', $row->id) }}" method="POST" onsubmit="return confirm('Hapus data bayi {{ $row->nama_bayi }}?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" title="Hapus"><i class="fas fa-trash"></i></button>
@@ -86,57 +94,66 @@
                                             <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div class="modal-body">
-                                            <table class="table table-striped">
-                                                <tr>
-                                                    <th width="35%">Tanggal Pelayanan (KN 3)</th>
-                                                    <td>{{ \Carbon\Carbon::parse($row->tanggal_kn3)->translatedFormat('l, d F Y') }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Nama Bayi</th>
-                                                    <td>{{ $row->nama_bayi }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Tanggal Lahir</th>
-                                                    <td>{{ \Carbon\Carbon::parse($row->tanggal_lahir)->translatedFormat('d F Y') }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Nama Orang Tua</th>
-                                                    <td>{{ $row->nama_orang_tua }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Alamat Lengkap</th>
-                                                    <td>{{ $row->alamat }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Status PBI</th>
-                                                    <td>{{ $row->is_pbi ? 'Penerima Bantuan Iuran' : 'Non-PBI / Mandiri' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Berat Badan Lahir</th>
-                                                    <td>{{ $row->berat_badan ?? '-' }} gram</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Panjang Badan</th>
-                                                    <td>{{ $row->panjang_badan ?? '-' }} cm</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Kondisi Kesehatan</th>
-                                                    <td>{{ $row->kondisi_kesehatan ?? '-' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Terakhir Diupdate</th>
-                                                    <td>{{ $row->updated_at ? $row->updated_at->diffForHumans() : '-' }}</td>
-                                                </tr>
-                                            </table>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <table class="table table-sm table-borderless">
+                                                        <tr>
+                                                            <th width="45%">Tgl Pelayanan</th>
+                                                            <td>: {{ \Carbon\Carbon::parse($row->tanggal_kn3)->translatedFormat('d F Y') }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Nama Bayi</th>
+                                                            <td>: {{ $row->nama_bayi }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Tempat Lahir</th>
+                                                            <td>: {{ $row->tempat_lahir ?? '-' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Tgl Lahir</th>
+                                                            <td>: {{ \Carbon\Carbon::parse($row->tanggal_lahir)->translatedFormat('d F Y') }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>NIK</th>
+                                                            <td>: {{ $row->nik ?? '-' }}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <table class="table table-sm table-borderless">
+                                                        <tr>
+                                                            <th width="45%">Orang Tua</th>
+                                                            <td>: {{ $row->nama_orang_tua }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Berat Badan</th>
+                                                            <td>: {{ $row->berat_badan ?? '-' }} gram</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Panjang Badan</th>
+                                                            <td>: {{ $row->panjang_badan ?? '-' }} cm</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Kondisi</th>
+                                                            <td>: <span class="font-weight-bold">{{ $row->kondisi_kesehatan ?? '-' }}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Status PBI</th>
+                                                            <td>: {{ $row->is_pbi ? 'Ya (PBI)' : 'Tidak' }}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <label class="font-weight-bold">Alamat:</label>
+                                            <p>{{ $row->alamat }}</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                                            <a href="{{ route('bayi-baru-lahir.edit', $row->id) }}" class="btn btn-warning">Edit Data</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {{-- AKHIR MODAL DETAIL --}}
                         </td>
                     </tr>
                     @endforeach
@@ -156,7 +173,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {{-- Form Filter --}}
             <form action="{{ route('bayi-baru-lahir.cetak') }}" method="GET" target="_blank">
                 <div class="modal-body">
                     <div class="form-group">
@@ -222,6 +238,7 @@
                 text: '<i class="fas fa-file-excel"></i> Export Excel',
                 className: 'btn btn-success btn-sm',
                 exportOptions: {
+                    // Export kolom: Tgl Pelayanan, Nama, Tgl Lahir, Ortu, Alamat, Kondisi, PBI
                     columns: [0, 1, 2, 3, 4, 5]
                 }
             }]
@@ -229,7 +246,6 @@
 
         $('.dt-buttons').addClass('mb-3');
 
-        // Logic Toggle Tanggal di Modal
         $('input[type=radio][name=filter]').change(function() {
             if (this.value == 'periode') {
                 $('#dateRange').slideDown();

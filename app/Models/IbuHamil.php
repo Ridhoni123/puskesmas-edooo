@@ -16,6 +16,8 @@ class IbuHamil extends Model
         'nik',             // NIK
         'nama_suami',      // Nama Suami
         'alamat',          // Alamat lengkap
-        'is_pbi'           // Jaminan Kesehatan/PBI (Ya/Tidak)
+        'is_pbi',           // Jaminan Kesehatan/PBI (Ya/Tidak)
+        'no_hp',          // No. HP / WhatsApp
+        'keterangan'      // Keterangan tambahan
     ];
 }

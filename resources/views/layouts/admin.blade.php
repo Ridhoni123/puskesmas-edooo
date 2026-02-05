@@ -11,6 +11,123 @@
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <style>
+        /* =========================
+   TEMA PINK SB ADMIN 2
+   ========================= */
+
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(180deg, #ec4899, #f472b6) !important;
+        }
+
+        /* Brand */
+        .sidebar .sidebar-brand {
+            background: rgba(255, 255, 255, 0.15);
+            font-weight: bold;
+        }
+
+        /* Menu */
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            transition: 0.3s;
+        }
+
+        .sidebar .nav-item .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        /* Active Menu */
+        .sidebar .nav-item.active .nav-link {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* Sidebar Divider */
+        .sidebar hr.sidebar-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Topbar */
+        .topbar {
+            background: linear-gradient(90deg, #ffe4ec, #fff) !important;
+        }
+
+        /* Username */
+        .topbar .text-gray-600 {
+            color: #ec4899 !important;
+            font-weight: 600;
+        }
+
+        /* Button Primary */
+        .btn-primary {
+            background: linear-gradient(to right, #ec4899, #f472b6) !important;
+            border: none !important;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
+        }
+
+        /* Card */
+        .card {
+            border-radius: 15px !important;
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.15) !important;
+        }
+
+        /* Card Header */
+        .card-header {
+            background: #ffe4ec !important;
+            color: #b4235a !important;
+            font-weight: bold;
+        }
+
+        /* Table Hover */
+        .table tbody tr:hover {
+            background: #fff0f5 !important;
+        }
+
+        /* Footer */
+        .sticky-footer {
+            background: #fff0f5 !important;
+        }
+
+        /* Scroll Top */
+        .scroll-to-top {
+            background: #ec4899 !important;
+        }
+
+        .scroll-to-top:hover {
+            background: #db2777 !important;
+        }
+
+        /* Modal Header */
+        .modal-header {
+            background: #ffe4ec;
+            color: #b4235a;
+        }
+
+        /* Dropdown */
+        .dropdown-menu {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
+        }
+
+        /* Form Focus */
+        .form-control:focus {
+            border-color: #ec4899 !important;
+            box-shadow: 0 0 0 0.2rem rgba(236, 72, 153, 0.25) !important;
+        }
+
+        /* Badge */
+        .badge-primary {
+            background: #ec4899 !important;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -49,7 +166,20 @@
             <hr class="sidebar-divider">
             @endif
 
+            {{-- MENU KHUSUS KEPALA (Laporan Keseluruhan) --}}
+            @if(auth()->user()->level == 'kepala' || auth()->user()->level == 'admin')
+            <div class="sidebar-heading">Laporan Eksekutif</div>
+            <li class="nav-item {{ request()->routeIs('laporan.keseluruhan') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('laporan.keseluruhan') }}">
+                    <i class="fas fa-fw fa-chart-line"></i>
+                    <span>Rekapitulasi Data</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            @endif
+
             <div class="sidebar-heading">Laporan Kesehatan</div>
+
 
             <li class="nav-item {{ request()->is('ibu-hamil*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('ibu-hamil.index') }}">
@@ -111,15 +241,14 @@
                                     <small class="text-muted">({{ ucfirst(Auth::user()->level ?? '') }})</small>
                                 </span>
                                 <img class="img-profile rounded-circle"
-                                    src="{{ asset('img/user.jpeg') }}"
-                                    alt="User">
+                                    src="{{ Auth::user()->foto ? asset('storage/profile/' . Auth::user()->foto) : asset('img/user.jpeg') }}">
 
 
                             </a>
 
                             {{-- Dropdown Menu --}}
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('profile') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>

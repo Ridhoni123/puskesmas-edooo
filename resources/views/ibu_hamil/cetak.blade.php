@@ -8,8 +8,9 @@
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 12px;
-            margin: 20px;
+            font-size: 11px;
+            /* Ukuran font diperkecil sedikit agar muat banyak kolom */
+            margin: 10px;
         }
 
         /* Styling Kop Surat */
@@ -23,13 +24,14 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 80px;
-            height: 80px;
-            border: 1px solid #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
+            width: 70px;
+            height: 70px;
+        }
+
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .header h2,
@@ -40,25 +42,24 @@
         }
 
         .header h2 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             text-transform: uppercase;
         }
 
         .header h3 {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             text-transform: uppercase;
             margin-top: 5px;
         }
 
         .header p {
-            font-size: 12px;
+            font-size: 11px;
             font-style: italic;
             margin-top: 5px;
         }
 
-        /* Garis Ganda Kop Surat */
         .double-line {
             margin-top: 10px;
             border-top: 3px solid black;
@@ -66,12 +67,11 @@
             height: 3px;
         }
 
-        /* Judul Laporan */
         .title {
             text-align: center;
             font-weight: bold;
-            font-size: 14px;
-            margin: 20px 0;
+            font-size: 13px;
+            margin: 15px 0;
             text-transform: uppercase;
             text-decoration: underline;
         }
@@ -86,43 +86,29 @@
         table th,
         table td {
             border: 1px solid black;
-            padding: 5px;
+            padding: 4px;
             vertical-align: middle;
+            word-wrap: break-word;
         }
 
         table th {
             background-color: #f2f2f2;
             text-align: center;
             font-weight: bold;
+            text-transform: uppercase;
         }
 
         /* Tanda Tangan */
         .footer-signature {
-            margin-top: 50px;
+            margin-top: 30px;
             float: right;
             width: 250px;
             text-align: center;
         }
 
-        /* Tombol Cetak (Hanya tampil di layar, hilang saat diprint) */
         .no-print {
             margin-bottom: 20px;
             text-align: right;
-        }
-
-        .logo-placeholder {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 80px;
-            height: 80px;
-            /* border: 1px solid #000;  <-- Baris ini sudah dihapus agar tidak ada kotak */
-        }
-
-        .logo-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
         }
 
         @media print {
@@ -131,13 +117,9 @@
             }
 
             @page {
-                margin: 2cm;
+                margin: 1cm;
                 size: landscape;
             }
-
-
-
-            /* Cetak Landscape agar muat */
         }
     </style>
 </head>
@@ -164,36 +146,36 @@
 
     <div class="title">LAPORAN DATA IBU HAMIL</div>
 
-    <div style="text-align: center; font-weight: bold; margin-bottom: 20px;">
+    <div style="text-align: center; font-weight: bold; margin-bottom: 15px;">
         {{ $periode }}
     </div>
 
     <table>
         <thead>
             <tr>
-                <th width="30">No</th>
-                <th>No e-RM</th>
-                <th>Tgl Periksa K6</th>
+                <th width="20">No</th>
+                <th width="70">Tgl Periksa</th>
                 <th>Nama Ibu Hamil</th>
-                <th>Tgl Lahir</th>
-                <th>NIK</th>
+                <th width="90">NIK</th>
                 <th>Nama Suami</th>
-                <th>Alamat</th>
-                <th>Jaminan</th>
+                <th width="120">Alamat</th>
+                <th width="70">Jaminan</th>
+                <th width="80">No HP</th>
+                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
             @foreach($data as $key => $row)
             <tr>
                 <td style="text-align: center;">{{ $key + 1 }}</td>
-                <td style="text-align: center;">-</td>
                 <td style="text-align: center;">{{ \Carbon\Carbon::parse($row->tanggal_k6)->format('d-m-Y') }}</td>
                 <td>{{ $row->nama_ibu }}</td>
-                <td style="text-align: center;">{{ $row->tanggal_lahir ? \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y') : '-' }}</td>
                 <td style="text-align: center;">{{ $row->nik }}</td>
                 <td>{{ $row->nama_suami }}</td>
                 <td>{{ $row->alamat }}</td>
-                <td style="text-align: center;">{{ $row->is_pbi ? 'BPJS PBI' : 'UMUM/MANDIRI' }}</td>
+                <td style="text-align: center;">{{ $row->is_pbi ? 'BPJS PBI' : 'MANDIRI' }}</td>
+                <td style="text-align: center;">{{ $row->no_hp ?? '-' }}</td>
+                <td>{{ $row->keterangan ?? '-' }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -203,9 +185,9 @@
         <p>Banjarmasin, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
         <p>Mengetahui,</p>
         <p><b>Kepala Puskesmas</b></p>
-        <br><br><br><br>
+        <br><br><br>
         <p>(.....................................................)</p>
-        <p style="text-align: left; margin-left: 20px;">NIP. 19..........................................</p>
+        <p style="text-align: left; margin-left: 25px;">NIP. 19..........................................</p>
     </div>
 
 </body>

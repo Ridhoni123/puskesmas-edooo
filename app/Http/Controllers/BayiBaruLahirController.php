@@ -23,6 +23,10 @@ class BayiBaruLahirController extends Controller
             'nama_bayi'      => 'required|string',
             'tanggal_lahir'  => 'required|date',
             'nik'            => 'nullable|digits:16',
+            'tempat_lahir'      => 'nullable|string',      // Tambahkan ini
+            'berat_badan'       => 'nullable|numeric',     // Tambahkan ini
+            'panjang_badan'     => 'nullable|numeric',     // Tambahkan ini
+            'kondisi_kesehatan' => 'nullable|string',
             'nama_orang_tua' => 'required|string',
             'is_pbi'         => 'required',
             'alamat'         => 'required'
@@ -42,6 +46,10 @@ class BayiBaruLahirController extends Controller
             'tanggal_kn3'    => 'required|date',
             'nama_bayi'      => 'required|string',
             'tanggal_lahir'  => 'required|date',
+            'tempat_lahir'      => 'nullable|string',      // Tambahkan ini
+            'berat_badan'       => 'nullable|numeric',     // Tambahkan ini
+            'panjang_badan'     => 'nullable|numeric',     // Tambahkan ini
+            'kondisi_kesehatan' => 'nullable|string',
             'nik'            => 'nullable|digits:16',
             'nama_orang_tua' => 'required|string',
             'is_pbi'         => 'required',

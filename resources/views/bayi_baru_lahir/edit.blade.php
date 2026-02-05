@@ -8,7 +8,7 @@
         <form action="{{ route('bayi-baru-lahir.update', $bayi->id) }}" method="POST">
             @csrf
             @method('PUT')
-            
+
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label>Tanggal Pelayanan KN 3</label>
@@ -29,6 +29,30 @@
                     <label>NIK (16 Digit)</label>
                     <input type="text" name="nik" class="form-control" value="{{ $bayi->nik }}" maxlength="16">
                 </div>
+            </div>
+            {{-- Tambahkan field yang sama dengan isi value dari database --}}
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Tempat Lahir</label>
+                    <input type="text" name="tempat_lahir" class="form-control" value="{{ $bayi->tempat_lahir }}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>Berat Badan (gram)</label>
+                    <input type="number" name="berat_badan" class="form-control" value="{{ $bayi->berat_badan }}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>Panjang Badan (cm)</label>
+                    <input type="number" name="panjang_badan" class="form-control" value="{{ $bayi->panjang_badan }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Kondisi Kesehatan</label>
+                <select name="kondisi_kesehatan" class="form-control">
+                    <option value="Sehat" {{ $bayi->kondisi_kesehatan == 'Sehat' ? 'selected' : '' }}>Sehat</option>
+                    <option value="Sakit" {{ $bayi->kondisi_kesehatan == 'Sakit' ? 'selected' : '' }}>Sakit</option>
+                    <option value="Perlu Observasi" {{ $bayi->kondisi_kesehatan == 'Perlu Observasi' ? 'selected' : '' }}>Perlu Observasi</option>
+                </select>
             </div>
 
             <div class="row">

@@ -45,6 +45,8 @@
                         <th>Alamat</th>
                         <th>Suami</th>
                         <th>PBI</th>
+                        <th>No HP</th>
+                        <th>Keterangan</th>
                         <th width="120px">Aksi</th>
                     </tr>
                 </thead>
@@ -63,6 +65,8 @@
                                 {{ $row->is_pbi ? 'Ya' : 'Tidak' }}
                             </span>
                         </td>
+                        <td>{{ $row->no_hp }}</td>
+                        <td>{{ $row->keterangan }}</td>
                         <td>
                             <div class="d-flex justify-content-center">
                                 <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#detailModal{{ $row->id }}" title="Lihat Detail"><i class="fas fa-eye"></i></button>
@@ -113,11 +117,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th>No HP</th>
-                                                    <td>{{ $row->no_hp ?? '-' }}</td>
+                                                    <td>{{ $row->no_hp }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Keterangan</th>
-                                                    <td>{{ $row->keterangan ?? '-' }}</td>
+                                                    <td>{{ $row->keterangan }}</td>
                                                 </tr>
                                             </table>
                                         </div>
