@@ -14,159 +14,245 @@
 
         body {
             margin: 0;
-            padding: 0;
             min-height: 100vh;
             display: flex;
-            background-color: #fdf2f8;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ec4899, #9333ea);
         }
 
-        /* Container Utama */
+        /* Container */
         .login-container {
-            display: flex;
             width: 100%;
-            min-height: 100vh;
+            max-width: 1000px;
+            min-height: 550px;
+            display: flex;
             overflow: hidden;
+            border-radius: 25px;
+            background: white;
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.25),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2);
         }
 
-        /* Sisi Kiri: Foto */
+        /* Left Image */
         .login-image {
             flex: 1;
-            display: none;
-            /* Sembunyikan di HP */
             position: relative;
-            background: linear-gradient(rgba(236, 72, 153, 0.4), rgba(236, 72, 153, 0.4)),
-            url("{{ asset('img/bckgrnd.png') }}");
+            background:
+                linear-gradient(rgba(236, 72, 153, 0.45),
+                    rgba(147, 51, 234, 0.45)),
+                url("{{ asset('img/bckgrnd.jpeg') }}");
             background-size: cover;
             background-position: center;
+            display: none;
         }
 
-        .login-image .overlay-text {
+        .overlay-text {
             position: absolute;
             bottom: 50px;
             left: 50px;
             color: white;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* Sisi Kanan: Form */
+        .overlay-text h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .overlay-text p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Right Form */
         .login-section {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: white;
-            padding: 40px;
+            padding: 50px 40px;
         }
 
         .login-box {
             width: 100%;
-            max-width: 400px;
-            text-align: center;
+            max-width: 380px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Title */
+        .login-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .login-logo {
+            width: 36px;
         }
 
         .login-box h2 {
             color: #ec4899;
-            margin-bottom: 10px;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 700;
         }
 
         .subtitle {
+            text-align: center;
             font-size: 14px;
             color: #6b7280;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
-        /* Alert Error */
+        /* Alert */
         .alert {
             background: #fdf2f8;
             color: #be185d;
             padding: 12px;
             border-radius: 10px;
             margin-bottom: 20px;
-            text-align: left;
             font-size: 13px;
             border: 1px solid #fbcfe8;
         }
 
-        .alert ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        /* Form Styling */
+        /* Form */
         .form-group {
-            margin-bottom: 20px;
-            text-align: left;
+            margin-bottom: 22px;
         }
 
         label {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #374151;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: block;
         }
 
         input {
             width: 100%;
             padding: 12px 16px;
-            border: 1px solid #f3a4c5;
             border-radius: 12px;
-            outline: none;
-            transition: all 0.3s ease;
-            font-size: 15px;
-            background-color: #fff;
+            border: 1px solid #f3a4c5;
+            font-size: 14px;
+            background: #fdf2f8;
+            transition: 0.3s;
         }
 
         input:focus {
+            outline: none;
             border-color: #ec4899;
-            box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.1);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.15);
         }
 
+        input:hover {
+            border-color: #db2777;
+        }
+
+        /* Remember */
         .remember {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            color: #4b5563;
             margin-bottom: 25px;
         }
 
-        .remember input {
-            width: auto;
-            margin-right: 10px;
+        /* Custom Checkbox */
+        .custom-check {
+            display: flex;
+            align-items: center;
             cursor: pointer;
+            font-size: 13px;
+            color: #4b5563;
+            user-select: none;
         }
 
+        .custom-check input {
+            display: none;
+        }
+
+        .checkmark {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            border: 2px solid #ec4899;
+            margin-right: 8px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .custom-check input:checked + .checkmark {
+            background: linear-gradient(135deg, #ec4899, #9333ea);
+            border-color: transparent;
+        }
+
+        .custom-check input:checked + .checkmark::after {
+            content: "✓";
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            left: 4px;
+            top: -1px;
+        }
+
+        /* Button */
         button {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #ec4899, #db2777);
+            background: linear-gradient(135deg, #ec4899, #9333ea);
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             color: white;
             font-weight: 600;
+            font-size: 15px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
+            transition: 0.3s;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
-            opacity: 0.95;
+            transform: scale(1.02);
+            box-shadow: 0 12px 25px rgba(236, 72, 153, 0.4);
         }
 
+        /* Footer */
         .footer {
-            margin-top: 30px;
-            font-size: 13px;
+            margin-top: 25px;
+            font-size: 12px;
             color: #9ca3af;
+            text-align: center;
         }
 
         /* Responsive */
         @media (min-width: 992px) {
             .login-image {
                 display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                margin: 20px;
+            }
+
+            .login-image {
+                height: 200px;
+            }
+
+            .overlay-text {
+                bottom: 20px;
+                left: 20px;
             }
         }
     </style>
@@ -176,19 +262,29 @@
 
     <div class="login-container">
 
+        <!-- LEFT -->
         <div class="login-image">
             <div class="overlay-text">
-                <h1>Selamat Datang</h1>
-                <p>Sistem Informasi Manajemen Puskesmas terpadu.</p>
+                <h1>Selamat Datang 👋</h1>
+                <p>Sistem Informasi Manajemen Puskesmas Terpadu</p>
             </div>
         </div>
 
+        <!-- RIGHT -->
         <div class="login-section">
-            <div class="login-box">
-                <h2>💗 Login</h2>
-                <p class="subtitle">Silakan masuk untuk mengelola data puskesmas</p>
 
-                {{-- Alert Error --}}
+            <div class="login-box">
+
+                <h2 class="login-title">
+                    <img src="{{ asset('img/logo.png') }}" class="login-logo">
+                    Login
+                </h2>
+
+                <p class="subtitle">
+                    Silakan masuk untuk mengelola data puskesmas
+                </p>
+
+                {{-- Alert --}}
                 @if ($errors->any())
                 <div class="alert">
                     <ul>
@@ -199,44 +295,45 @@
                 </div>
                 @endif
 
-                {{-- Form Login --}}
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
 
                     <div class="form-group">
                         <label>Email / Username</label>
-                        <input
-                            type="email"
-                            name="email"
+                        <input type="email" name="email"
                             value="{{ old('email') }}"
-                            required
-                            autofocus
-                            placeholder="nama@email.com">
+                            placeholder="nama@email.com"
+                            required autofocus>
                     </div>
 
                     <div class="form-group">
                         <label>Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            required
-                            placeholder="Masukkan kata sandi">
+                        <input type="password" name="password"
+                            placeholder="Masukkan kata sandi"
+                            required>
                     </div>
 
+                    <!-- Remember -->
                     <div class="remember">
-                        <input type="checkbox" name="remember" id="remember">
-                        <label for="remember" style="display: inline; font-weight: 400; margin: 0;">Ingat saya</label>
+                        <label class="custom-check">
+                            <input type="checkbox" name="remember">
+                            <span class="checkmark"></span>
+                            Ingat saya
+                        </label>
                     </div>
 
                     <button type="submit">
-                        Masuk ke Aplikasi
+                        Login
                     </button>
+
                 </form>
 
                 <div class="footer">
                     © {{ date('Y') }} Aplikasi Puskesmas Gadang Hanyar
                 </div>
+
             </div>
+
         </div>
 
     </div>
