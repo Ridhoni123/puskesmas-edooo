@@ -41,6 +41,7 @@
                     <tr>
                         <th>Tgl Pemeriksaan</th>
                         <th>Nama Ibu</th>
+                        <th>Tgl Lahir</th>
                         <th>NIK</th>
                         <th>Alamat</th>
                         <th>Suami</th>
@@ -57,6 +58,7 @@
                             {{ \Carbon\Carbon::parse($row->tanggal_k6)->format('d-m-Y') }}
                         </td>
                         <td>{{ $row->nama_ibu }}</td>
+                        <td>{{ \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y') }}</td>
                         <td>{{ $row->nik }}</td>
                         <td>{{ $row->alamat }}</td>
                         <td>{{ $row->nama_suami }}</td>
@@ -223,7 +225,7 @@
                     text: '<i class="fas fa-file-excel"></i> Export Excel',
                     className: 'btn btn-success btn-sm',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
+                        columns: [0, 1, 2, 3, 4, 5, 6]
                     }
                 }
                 // Tombol PDF & Print Table telah DIHAPUS sesuai permintaan

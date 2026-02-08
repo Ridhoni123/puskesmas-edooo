@@ -156,6 +156,7 @@
                 <th width="20">No</th>
                 <th width="70">Tgl Periksa</th>
                 <th>Nama Ibu Hamil</th>
+                <th width="80">Tgl Lahir</th>
                 <th width="90">NIK</th>
                 <th>Nama Suami</th>
                 <th width="120">Alamat</th>
@@ -170,6 +171,7 @@
                 <td style="text-align: center;">{{ $key + 1 }}</td>
                 <td style="text-align: center;">{{ \Carbon\Carbon::parse($row->tanggal_k6)->format('d-m-Y') }}</td>
                 <td>{{ $row->nama_ibu }}</td>
+                <td style="text-align: center;">{{ \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y') }}</td>
                 <td style="text-align: center;">{{ $row->nik }}</td>
                 <td>{{ $row->nama_suami }}</td>
                 <td>{{ $row->alamat }}</td>
