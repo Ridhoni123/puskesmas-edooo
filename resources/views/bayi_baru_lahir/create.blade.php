@@ -75,7 +75,15 @@
                 <textarea name="alamat" class="form-control" rows="2" placeholder="Contoh: Ais. Nasution Rt. 02"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-info">Simpan Data Bayi</button>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-info">Simpan Data Bayi</button>
+
+                <a href="{{ route('bayi-baru-lahir.index') }}"
+                    class="btn btn-secondary ml-2">
+                    Batal
+                </a>
+            </div>
+
         </form>
     </div>
 </div>
